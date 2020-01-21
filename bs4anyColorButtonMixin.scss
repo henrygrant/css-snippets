@@ -1,0 +1,59 @@
+//taken from bourbon source code
+@function shade($color, $percent) {
+  @return mix(#000, $color, $percent);
+}
+
+@function tint($color, $percent) {
+  @return mix(#fff, $color, $percent);
+}
+
+
+
+
+@mixin status-button($status-color) {
+  @if (lightness($status-color) > 30) { // still working kinks out with this
+    color: black;
+  } @else {
+    color: white;
+  }
+  background-color: $status-color;
+  border-color: $status-color;
+
+  &:hover {
+    @if (lightness($status-color) > 30) { // still working kinks out with this
+      background-color: shade($status-color, 10%);
+      border-color: shade($status-color, 10%);
+      color: black;
+    } @else {
+        color: white;
+        background-color: tint($status-color, 10%);
+        border-color: tint($status-color, 10%);
+    }
+  }
+
+  &:focus, &.focus {
+    box-shadow: 0 0 0 0.2rem rgba($status-color, 0.5);
+  }
+
+  &:disabled, &.disabled {
+    background-color: $status-color;
+    border-color: $status-color;
+  }
+
+  &:not(:disabled):not(.disabled):active, &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle {
+    @if (lightness($status-color) > 30) {
+      background-color: shade($status-color, 15%);
+      border-color: shade($status-color, 15%);
+    } @else {
+      background-color: tint($status-color, 15%);
+      border-color: tint($status-color, 15%);
+    }
+  }
+
+  &:not(:disabled):not(.disabled):active:focus, &:not(:disabled):not(.disabled).active:focus,
+  .show > &.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba($status-color, 0.5);
+  }
+}
+
